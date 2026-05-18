@@ -1,6 +1,7 @@
 {
   "name": "beaconhq/beacon-php",
   "description": "Beacon PHP SDK — error tracking for PHP applications",
+  "version": "1.0.0",
   "type": "library",
   "license": "MIT",
   "require": {
