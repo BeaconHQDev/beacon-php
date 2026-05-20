@@ -6,6 +6,8 @@ class Beacon
 {
     private static ?string $ingestUrl = null;
     private static ?string $release = null;
+    private static ?string $url = null;
+    private static ?string $userAgent = null;
     private static string $environment = 'production';
     private static string $sdkVersion = '1.0.0';
     private static bool $initialized = false;
@@ -51,6 +53,15 @@ class Beacon
             compact('id', 'email', 'name'),
             fn ($v) => $v !== null
         );
+    }
+
+    /**
+     * Set the HTTP request context to attach to subsequent events.
+     */
+    public static function setContext(?string $url = null, ?string $userAgent = null): void
+    {
+        self::$url = $url;
+        self::$userAgent = $userAgent;
     }
 
     /**
@@ -144,6 +155,8 @@ class Beacon
             'user_name' => self::$user['name'] ?? null,
             'tags' => self::$tags,
             'extra' => $extra,
+            'url' => self::$url,
+            'user_agent' => self::$userAgent,
         ];
     }
 
@@ -215,5 +228,7 @@ class Beacon
         self::$beforeSend = null;
         self::$transport = null;
         self::$previousExceptionHandler = null;
+        self::$url = null;
+        self::$userAgent = null;
     }
 }
